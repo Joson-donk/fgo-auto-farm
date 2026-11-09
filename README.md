@@ -57,7 +57,7 @@ python main.py --serial emulator-5554
 ```
 
 - 中途停止：终端 **Ctrl+C**（或关闭 launcher）。
-- `start_farm.bat` 仍可用，内部转发到 `start.bat`。
+- `start.bat` 仍可用，内部转发到 `start.bat`。
 - ADB：`config.py` 的 `ADB_PATH` / `DEVICE_SERIAL`，或环境变量 `FGO_ADB` / `FGO_SERIAL`；`ADB_PATH` 留空会自动找常见模拟器路径（含 LDPlayer9/14、MuMu、BlueStacks、platform-tools）。
 
 ---
@@ -83,7 +83,7 @@ python main.py --serial emulator-5554
 | 文件 | 作用 |
 |---|---|
 | `start.bat` | 主入口：无 venv 则自建并装依赖，再开 GUI |
-| `start_farm.bat` | 兼容旧名，转发到 `start.bat` |
+| `start.bat` | 兼容旧名，转发到 `start.bat` |
 | `setup_connect.py` | 一键连通：adb / 设备 / 截图 |
 | `launcher.py` / `main.py` | GUI / CLI |
 | `config.py` / `config.example.py` | 参数与职阶 profile |

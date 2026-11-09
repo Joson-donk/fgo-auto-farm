@@ -104,7 +104,7 @@ support_select.py      助战名字匹配与翻页策略
 fgo_bot.py             状态机（进本/战斗/结算）
 calibrate.py           --setup-class / --verify-class 向导
 main.py                CLI 入口
-launcher.py + start.bat        GUI 入口（start_farm.bat 兼容转发）
+launcher.py + start.bat        GUI 入口（start.bat 兼容转发）
 setup_connect.py      一键连通：找 adb / 设备 / 截图
 ONBOARDING.md         首次上手剧本可读版（权威仍在本文件〇节）
 templates/             PNG 模板
