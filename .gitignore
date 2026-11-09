@@ -1,4 +1,4 @@
-# Python
+﻿# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -28,15 +28,17 @@ test_output/
 _*.py
 !test_*.py
 
-# Private assets (if someone mirrors a private tree)
-# 例外：halloween90pp 示例需要 elizabeth / louhi 模板入库
+# Private / farm-specific assets (if someone mirrors a private tree)
 templates/private/
 templates/support_koyanskaya.png
 templates/support_medusa.png
 templates/support_medusa_face.png
+templates/support_castoria.png
+templates/support_altria_caster.png
+templates/support_elizabeth.png
 templates/party_support_*.png
-!templates/party_support_elizabeth.png
 templates/np_card.png
+templates/np_card_louhi.png
 templates/np_card_medusa.png
 templates/saber_servant_*.png
 templates/event_banner.png
