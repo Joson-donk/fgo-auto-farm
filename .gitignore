@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Runtime / local
+logs/
+logs/debug/
+*.log
+config.local.py
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Scratch / one-off
+_patch_*/
+_fix_*/
+_dump_*/
+test_output/
+_*.py
+!test_*.py
+
+# Private assets (if someone mirrors a private tree)
+templates/private/
+templates/support_elizabeth.png
+templates/support_koyanskaya.png
+templates/support_medusa.png
+templates/support_medusa_face.png
+templates/party_support_*.png
+templates/np_card.png
+templates/np_card_louhi.png
+templates/np_card_medusa.png
+templates/saber_servant_*.png
+templates/event_banner.png
+templates/event_quota.png
