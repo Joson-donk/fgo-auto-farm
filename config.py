@@ -25,6 +25,7 @@ BATTLE_CLASSES = {
     # 内置 default 通用壳 + 可选示例 halloween90pp；其它副本按 ADAPT_GUIDE 新增
     "default": {"label": "默认战斗（助战页启动）", "ready": True},
     "halloween90pp": {"label": "万圣节90++", "ready": True},
+    "quest90": {"label": "90级本", "ready": True},
 }
 
 # 战斗相关等待时长（秒）
@@ -285,6 +286,35 @@ BATTLE_CLASS_PROFILES = {
         ],
         "preferred_servant": 2,
         "prefer_servant_every_turn": True,
+    },
+    "quest90": {
+        # Q1-Q8: 3波；娄希伤+光高扬辅+卡斯特辅；助战卡斯特；主攻1；全技能指向1；宝具全放
+        "support_label": "阿尔托莉雅・卡斯特",
+        "support_template": "support_castoria.png",
+        "support_filter": None,
+        "skills": [
+            ("skill_0", ("servant_if_prompt", 1)),
+            ("skill_1", ("servant_if_prompt", 1)),
+            ("skill_2", ("servant_if_prompt", 1)),
+            ("skill_3", ("servant_if_prompt", 1)),
+            ("skill_4", ("servant_if_prompt", 1)),
+            ("skill_5", ("servant_if_prompt", 1)),
+            ("skill_6", ("servant_if_prompt", 1)),
+            ("skill_7", ("servant_if_prompt", 1)),
+            ("skill_8", ("servant_if_prompt", 1)),
+        ],
+        "check_skills_each_turn": True,
+        "skill_reclick": 1,
+        "servant_target_tap_mode": "double_frame",
+        "require_servant_recognition": False,
+        "np_templates": [
+            {"template": "np_card_louhi.png", "servant": 0, "from_turn": 0},
+            {"servant": 1, "from_turn": 0},
+            {"servant": 2, "from_turn": 0},
+        ],
+        "np_release_all_ready": True,
+        "preferred_servant": 0,
+        "prefer_servant_every_turn": True,
     }
 
 }
@@ -429,7 +459,7 @@ NETWORK_RETRY_MAX = 3
 NETWORK_RETRY_WAIT = 5.0     # 每次重试前等待秒数
 # 战斗失败处理
 BATTLE_LOST_ACTION = "continue_command"  # "retry" 重新进本 / "stop" 停止 / "continue_command" 令咒续关 / "continue_quartz" 圣晶石续关（用户禁用）
-BATTLE_LOST_CONTINUE_MAX = 1  # 单局最多续关次数，防无人值守烧资源
+BATTLE_LOST_CONTINUE_MAX = 0  # quest90 要求败北不续；万圣节若要续令咒改回 1
 # 维护检测
 MAINTENANCE_STOP = True       # 检测到维护公告立即停止
 
