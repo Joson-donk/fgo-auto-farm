@@ -7,8 +7,9 @@
   * 相关系数达到阈值；
   * 名称裁块的结构分、字形重合都像模板（不是一块相似的蓝底）；
   * 短名字右侧不能再接着文字（否则是「美杜莎〔Lily〕」这类前缀误命中）；
-  * 名称完整落在屏幕内；
-  * 同屏没有第二张同样可信的卡。
+  * 名称完整落在屏幕内。
+同屏多张都完整合格（例如列表里好几个同名助战）时，取分数最高的那张；
+只有「一张合格 + 另有近似假命中」才判 ambiguous，避免乱点前缀/假峰。
 调用方还要再等一帧确认，并在点击后确认已经离开助战列表。
 """
 from dataclasses import dataclass, replace
@@ -293,7 +294,8 @@ def _looks_like_template(candidate, gates):
 
 
 def rank_support_candidates(candidates, template_w, gates):
-    """唯一一张合格卡才 accept。多张像模板的卡一律 ambiguous，不准点。"""
+    """合格卡取最高分 accept。多张同名都过线时点最好的那张；
+    一张合格却另有近似假命中时仍 ambiguous，避免乱点前缀/假峰。"""
     if not candidates:
         return RankResult("reject", None, None, None, "no_peak")
     ordered = sorted(candidates, key=lambda item: (item.ncc, item.structure),
@@ -302,7 +304,10 @@ def rank_support_candidates(candidates, template_w, gates):
     runner_up = ordered[1] if len(ordered) > 1 else None
     qualified = [item for item in ordered
                  if _rejection_reason(item, template_w, gates) is None]
-    rivals_of = []
+    # 列表里多个同名助战：全部完整合格 → 点最高分，不再因「不唯一」拒点
+    if len(qualified) >= 2:
+        return RankResult(
+            "accept", qualified[0], qualified[0], qualified[1], "accept")
     if len(qualified) == 1:
         chosen = qualified[0]
         rivals_of = [
@@ -318,12 +323,10 @@ def rank_support_candidates(candidates, template_w, gates):
                 )
             )
         ]
-    if len(qualified) >= 2 or rivals_of:
-        rival = rivals_of[0] if rivals_of else qualified[1]
-        primary = qualified[0]
-        return RankResult("ambiguous", None, primary, rival, "ambiguous")
-    if len(qualified) == 1:
-        return RankResult("accept", qualified[0], qualified[0], runner_up, "accept")
+        if rivals_of:
+            return RankResult(
+                "ambiguous", None, chosen, rivals_of[0], "ambiguous")
+        return RankResult("accept", chosen, chosen, runner_up, "accept")
     return RankResult(
         "reject", None, best, runner_up,
         _rejection_reason(best, template_w, gates) or "below_threshold")
@@ -496,7 +499,7 @@ _REASON_TEXT = {
     "trailing_name": "名称右侧仍有文字，疑似同名前缀（如 Lily / Alter）",
     "clipped": "名称贴边，卡片不完整",
     "ambiguous": "多个候选，不能唯一确定是配置的助战",
-    "accept": "唯一高置信匹配",
+    "accept": "高置信匹配",
 }
 
 

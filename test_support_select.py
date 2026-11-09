@@ -110,15 +110,17 @@ class RankingTests(unittest.TestCase):
             [_candidate(trailing_ratio=0.16)], 275, GATES)
         self.assertEqual(rank.status, "accept")
 
-    def test_two_qualified_cards_are_ambiguous(self):
+    def test_two_qualified_cards_pick_best(self):
         cards = [
             _candidate(y=300, ncc=0.99),
             _candidate(y=560, ncc=0.97),
         ]
         rank = rank_support_candidates(cards, 105, GATES)
-        self.assertEqual(rank.status, "ambiguous")
-        self.assertIsNone(rank.chosen)
-        self.assertIn("多个候选", describe_rank(rank))
+        self.assertEqual(rank.status, "accept")
+        self.assertIsNotNone(rank.chosen)
+        self.assertAlmostEqual(rank.chosen.ncc, 0.99)
+        self.assertAlmostEqual(rank.chosen.y, 300)
+        self.assertIn("高置信匹配", describe_rank(rank))
 
     def test_true_card_plus_prefix_lookalike_is_not_clicked(self):
         cards = [
@@ -179,13 +181,15 @@ class ScreenshotTests(unittest.TestCase):
         self.assertEqual(rank.status, "reject", describe_rank(rank))
         self.assertEqual(rank.reason, "trailing_name")
 
-    def test_two_real_medusas_are_not_clicked(self):
+    def test_two_real_medusas_pick_best(self):
         screen = _canvas(self.medusa, 400, 240)
         height, width = self.medusa.shape[:2]
         screen[520:520 + height, 400:400 + width] = self.medusa
         rank, _ = evaluate_support_screen(screen, self.medusa, GATES)
-        self.assertEqual(rank.status, "ambiguous", describe_rank(rank))
-        self.assertIsNone(rank.chosen)
+        self.assertEqual(rank.status, "accept", describe_rank(rank))
+        self.assertIsNotNone(rank.chosen)
+        # 两张同模板都合格时取分数最高；合成图上两处同像素，取排序后的第一张
+        self.assertGreaterEqual(rank.chosen.ncc, GATES.ncc_threshold)
 
     def test_other_servant_nameplates_do_not_match_medusa(self):
         for other in (self.koyanskaya, self.elizabeth):
