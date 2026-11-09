@@ -1,3 +1,10 @@
+## 2026-11-09 — 公开上手主路径
+
+- 新增 `start.bat`：无 `.venv` 时自动创建并安装依赖，再启动 `launcher.py`；`start_farm.bat` 兼容转发
+- 新增 `setup_connect.py`：找 adb / 列设备 / 截图，不依赖 OpenCV
+- 新增 `ONBOARDING.md`；`ADAPT_GUIDE` 〇节改为完整 6 步 AI 上手剧本；去掉重复粘贴段落
+- `README` 主路径改为：AI 连通 → 双击 start.bat
+
 # Changelog（公开示例版）
 
 ## 2026-11-09 — 公开可用首版整理

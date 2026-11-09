@@ -41,3 +41,5 @@ templates/np_card_medusa.png
 templates/saber_servant_*.png
 templates/event_banner.png
 templates/event_quota.png
+# local staging leftovers
+fix_adapt.py
