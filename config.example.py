@@ -1,5 +1,3 @@
-# 示例配置：可复制为 config.py 后按本机改 ADB_PATH / DEVICE_SERIAL / APPLE_CONFIG。
-# 本文件与公开仓 config.py 内容一致，方便对照；日常直接改 config.py 即可。
 # -*- coding: utf-8 -*-
 """
 FGO 自动刷本脚本 —— 全局配置（公开示例版）
@@ -24,18 +22,8 @@ NODE_COUNT = 0
 
 # 职阶副本配置状态；后续完成各自阵容、技能、宝具模板和坐标后再启用。
 BATTLE_CLASSES = {
-    # 公开示例壳：停在助战页即可 --class default 开刷；不绑定私有助战/宝具模板
+    # 公开仓只提供通用默认壳；其它副本请按 ADAPT_GUIDE 自行新增 class key
     "default": {"label": "默认战斗（助战页启动）", "ready": True},
-    # 以下仅占位：配好阵容/模板后把 ready 改为 True，并在 BATTLE_CLASS_PROFILES 写 profile
-    "assassin": {"label": "杀阶（自配）", "ready": False},
-    "lancer": {"label": "枪阶（自配）", "ready": False},
-    "saber": {"label": "剑阶（自配）", "ready": False},
-    "caster": {"label": "术阶（自配）", "ready": False},
-    "rider": {"label": "骑阶（自配）", "ready": False},
-    "berserker": {"label": "狂阶（自配）", "ready": False},
-    "extra1": {"label": "额外职介1（自配）", "ready": False},
-    "extra2": {"label": "额外职介2（自配）", "ready": False},
-    "daily": {"label": "日常周回（自配）", "ready": False},
 }
 
 # 战斗相关等待时长（秒）
@@ -231,7 +219,6 @@ USE_SKILLS = True
 #   => 6 个高扬技能全部为「己方单体」，目标统一选冈田(从者1)。
 # 公开示例不附带私有实战 SKILLS 列表；技能顺序写在各 class 的 profile["skills"] 里。
 BATTLE_CLASS_PROFILES = {
-    # 公开默认壳：不依赖私有助战/宝具模板；停在助战页后 --class default 开刷
     "default": {
         "support_label": "列表第一个",
         "support_pick_first": True,   # 不按名字模板找人，点助战列表上方第一张卡
@@ -260,7 +247,7 @@ BATTLE_CLASS_PROFILES = {
         ],
         "np_release_all_ready": True,
         # 不设 preferred_servant：选卡走 decision 原有默认连携规则
-    },
+    }
 }
 
 
