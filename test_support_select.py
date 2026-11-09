@@ -344,8 +344,9 @@ class ConfigTests(unittest.TestCase):
         self.assertGreaterEqual(policy.max_refreshes, 1)
         self.assertEqual(policy.max_clicks_per_candidate, 2)
         self.assertIsNotNone(config.SUPPORT_REFRESH_POS)
-        # 公开仓只附带 default 壳；私有配队 profile 不随仓发布
-        self.assertIn("default", config.BATTLE_CLASS_PROFILES)
+        # 公开仓只附带 default 壳；私有/示例关卡 profile 不随仓发布
+        self.assertEqual(set(config.BATTLE_CLASSES), {"default"})
+        self.assertEqual(set(config.BATTLE_CLASS_PROFILES), {"default"})
         self.assertTrue(config.BATTLE_CLASS_PROFILES["default"].get("support_pick_first"))
         self.assertTrue(config.BATTLE_CLASSES["default"]["ready"])
 

@@ -22,10 +22,8 @@ NODE_COUNT = 0
 
 # 职阶副本配置状态；后续完成各自阵容、技能、宝具模板和坐标后再启用。
 BATTLE_CLASSES = {
-    # 内置 default 通用壳 + 可选示例 halloween90pp；其它副本按 ADAPT_GUIDE 新增
+    # 公开仓仅内置 default 通用壳；其它副本按 ADAPT_GUIDE 自行新增
     "default": {"label": "默认战斗（助战页启动）", "ready": True},
-    "halloween90pp": {"label": "万圣节90++", "ready": True},
-    "quest90": {"label": "90级本", "ready": True},
 }
 
 # 战斗相关等待时长（秒）
@@ -64,7 +62,7 @@ SUPPORT_GLYPH_MIN = 0.88           # 与真名 0.94+ 对齐
 SUPPORT_AMBIGUITY_MARGIN = 0.05    # 第二名与第一名分差小于此值则不点
 SUPPORT_TRAILING_MAX = 0.08        # 短名字右侧亮字比例上限
 SUPPORT_TRAILING_WIDTH_PX = 40     # 向模板右侧看多少像素
-SUPPORT_SHORT_NAME_PX = 300        # 伊丽莎白全名也做右侧续字检查，挡变体前缀误匹配
+SUPPORT_SHORT_NAME_PX = 300        # 较长名字也做右侧续字检查，挡变体前缀误匹配
 SUPPORT_EDGE_MARGIN_PX = 24        # 名称贴屏幕边缘视为不完整卡片
 SUPPORT_PEAK_FLOOR_MARGIN = 0.08   # 比阈值低这么多的峰也收集，用来判断歧义
 SUPPORT_NAME_REGION = (0.12, 0.16, 0.62, 0.78)  # 列表里从者名字出现的区域
@@ -249,72 +247,6 @@ BATTLE_CLASS_PROFILES = {
         ],
         "np_release_all_ready": True,
         # 不设 preferred_servant：选卡走 decision 原有默认连携规则
-    },
-    "halloween90pp": {
-        "support_label": "伊丽莎白·巴托里",
-        "support_template": "support_elizabeth.png",
-        "party_support_template": "party_support_elizabeth.png",
-        # 助战列表默认职阶即可，不点筛选
-        "support_filter": None,
-        "opening_skills": [
-            ("skill_2", None),              # 娄希第3技能，开局优先充能
-        ],
-        "skills": [
-            # 主力=伊丽莎白（3号位）。单体 buff 一律给她。
-            # servant_if_prompt=只在弹出「请选择对象」窗时才点目标；
-            # double_frame 模式保证点得到且不误点。
-            # skill_3=高扬斯卡娅第1技能「NFF特别服务」是己方单体卡性能/集星 buff；给 3 号位。
-            ("skill_0", ("servant_if_prompt", 3)),
-            ("skill_1", ("servant_if_prompt", 3)),
-            ("skill_2", ("servant_if_prompt", 3)),
-            ("skill_3", ("servant", 3)),
-            ("skill_4", ("servant_if_prompt", 3)),
-            ("skill_5", ("servant_if_prompt", 3)),
-            ("skill_6", ("servant_if_prompt", 3)),
-            ("skill_7", ("servant_if_prompt", 3)),
-            ("skill_8", ("servant_if_prompt", 3)),
-        ],
-        # 2号位(暗之高扬斯卡娅)单体 buff 需选目标；double_frame 防误点详情面板
-        "servant_target_tap_mode": "double_frame",
-        "check_skills_each_turn": True,
-        "skill_reclick": 1,
-        "require_servant_recognition": False,
-        "np_templates": [
-            {"template": "np_card_louhi.png", "servant": 0, "from_turn": 0},
-            # 伊丽莎白无专用模板：按 3 号位 + 存在性采样；min_wave=3 留到末波
-            {"servant": 2, "from_turn": 0, "min_wave": 3},
-        ],
-        "preferred_servant": 2,
-        "prefer_servant_every_turn": True,
-    },
-    "quest90": {
-        # Q1-Q8: 3波；娄希伤+光高扬辅+卡斯特辅；助战卡斯特；主攻1；全技能指向1；宝具全放
-        "support_label": "阿尔托莉雅・卡斯特",
-        "support_template": "support_castoria.png",
-        "support_filter": None,
-        "skills": [
-            ("skill_0", ("servant_if_prompt", 1)),
-            ("skill_1", ("servant_if_prompt", 1)),
-            ("skill_2", ("servant_if_prompt", 1)),
-            ("skill_3", ("servant_if_prompt", 1)),
-            ("skill_4", ("servant_if_prompt", 1)),
-            ("skill_5", ("servant_if_prompt", 1)),
-            ("skill_6", ("servant_if_prompt", 1)),
-            ("skill_7", ("servant_if_prompt", 1)),
-            ("skill_8", ("servant_if_prompt", 1)),
-        ],
-        "check_skills_each_turn": True,
-        "skill_reclick": 1,
-        "servant_target_tap_mode": "double_frame",
-        "require_servant_recognition": False,
-        "np_templates": [
-            {"template": "np_card_louhi.png", "servant": 0, "from_turn": 0},
-            {"servant": 1, "from_turn": 0},
-            {"servant": 2, "from_turn": 0},
-        ],
-        "np_release_all_ready": True,
-        "preferred_servant": 0,
-        "prefer_servant_every_turn": True,
     }
 
 }
@@ -459,7 +391,7 @@ NETWORK_RETRY_MAX = 3
 NETWORK_RETRY_WAIT = 5.0     # 每次重试前等待秒数
 # 战斗失败处理
 BATTLE_LOST_ACTION = "continue_command"  # "retry" 重新进本 / "stop" 停止 / "continue_command" 令咒续关 / "continue_quartz" 圣晶石续关（用户禁用）
-BATTLE_LOST_CONTINUE_MAX = 0  # quest90 要求败北不续；万圣节若要续令咒改回 1
+BATTLE_LOST_CONTINUE_MAX = 1  # 公开默认：令咒续关最多 1 次；不要续则改 0
 # 维护检测
 MAINTENANCE_STOP = True       # 检测到维护公告立即停止
 

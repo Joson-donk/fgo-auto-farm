@@ -1,3 +1,11 @@
+## 2026-11-10 — 公开仓 default-only 重建
+
+- 移除示例关卡 `halloween90pp` / `quest90` 及其专用助战/宝具/立绘模板
+- `config.py` / `config.example.py` 仅保留内置 `default` 战斗壳；苹果默认不吃；ADB 空路径自动发现
+- `BATTLE_LOST_CONTINUE_MAX` 公开默认改为 1（令咒续关上限；不要续则改 0）
+- 保留助战歧义规则：同屏多张均合格时点最高分；「一张合格 + 近似假命中」仍 ambiguous
+- 文档（README / ONBOARDING / ADAPT_GUIDE 第八节）对齐 default-only
+
 ## 问卷
 
 - Q1–Q8：去掉主动问苹果；Q7=败北令咒；Q8=其它战斗细节。
