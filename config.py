@@ -22,8 +22,9 @@ NODE_COUNT = 0
 
 # 职阶副本配置状态；后续完成各自阵容、技能、宝具模板和坐标后再启用。
 BATTLE_CLASSES = {
-    # 公开仓只提供通用默认壳；其它副本请按 ADAPT_GUIDE 自行新增 class key
+    # 内置 default 通用壳 + 可选示例 halloween90pp；其它副本按 ADAPT_GUIDE 新增
     "default": {"label": "默认战斗（助战页启动）", "ready": True},
+    "halloween90pp": {"label": "万圣节90++", "ready": True},
 }
 
 # 战斗相关等待时长（秒）
@@ -247,7 +248,45 @@ BATTLE_CLASS_PROFILES = {
         ],
         "np_release_all_ready": True,
         # 不设 preferred_servant：选卡走 decision 原有默认连携规则
+    },
+    "halloween90pp": {
+        "support_label": "伊丽莎白·巴托里",
+        "support_template": "support_elizabeth.png",
+        "party_support_template": "party_support_elizabeth.png",
+        # 助战列表默认职阶即可，不点筛选
+        "support_filter": None,
+        "opening_skills": [
+            ("skill_2", None),              # 娄希第3技能，开局优先充能
+        ],
+        "skills": [
+            # 主力=伊丽莎白（3号位）。单体 buff 一律给她。
+            # servant_if_prompt=只在弹出「请选择对象」窗时才点目标；
+            # double_frame 模式保证点得到且不误点。
+            # skill_3=高扬斯卡娅第1技能「NFF特别服务」是己方单体卡性能/集星 buff；给 3 号位。
+            ("skill_0", ("servant_if_prompt", 3)),
+            ("skill_1", ("servant_if_prompt", 3)),
+            ("skill_2", ("servant_if_prompt", 3)),
+            ("skill_3", ("servant", 3)),
+            ("skill_4", ("servant_if_prompt", 3)),
+            ("skill_5", ("servant_if_prompt", 3)),
+            ("skill_6", ("servant_if_prompt", 3)),
+            ("skill_7", ("servant_if_prompt", 3)),
+            ("skill_8", ("servant_if_prompt", 3)),
+        ],
+        # 2号位(暗之高扬斯卡娅)单体 buff 需选目标；double_frame 防误点详情面板
+        "servant_target_tap_mode": "double_frame",
+        "check_skills_each_turn": True,
+        "skill_reclick": 1,
+        "require_servant_recognition": False,
+        "np_templates": [
+            {"template": "np_card_louhi.png", "servant": 0, "from_turn": 0},
+            # 伊丽莎白无专用模板：按 3 号位 + 存在性采样；min_wave=3 留到末波
+            {"servant": 2, "from_turn": 0, "min_wave": 3},
+        ],
+        "preferred_servant": 2,
+        "prefer_servant_every_turn": True,
     }
+
 }
 
 
