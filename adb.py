@@ -26,6 +26,8 @@ def _candidate_adb_paths():
         # 雷电模拟器
         r"C:\leidian\LDPlayer9\adb.exe",
         r"D:\leidian\LDPlayer9\adb.exe",
+        r"C:\leidian\LDPlayer14\adb.exe",
+        r"D:\leidian\LDPlayer14\adb.exe",
         # 蓝叠
         r"C:\Program Files\BlueStacks_nxt\HD-Adb.exe",
         # Linux/macOS
